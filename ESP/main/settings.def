@@ -8,6 +8,7 @@ bit	fixstatus								// Send status as fixed values not array
 
 bit	web.control	1							// Web based controls
 bit	web.settings	1							// Web based settings
+bit	web.titlestatus	1							// Show power state in page title
 
 s	model									// Set model name manually
 s	region		eu							// Region (legacy URLs)

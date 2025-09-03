@@ -1980,6 +1980,8 @@ web_control (httpd_req_t * req)
                   "<script>"    //
                   "var ws=0;"   //
                   "var reboot=0;"       //
+                 "var basetitle=document.title;"   //
+                 "var titlestatus=%d;"   //
                   "function cf(v){return %s;}"  //
                   "function g(n){return document.getElementById(n);};"  //
                   "function b(n,v){var d=g(n);if(d)d.checked=v;}"       //
@@ -1996,7 +1998,8 @@ web_control (httpd_req_t * req)
                   "ws.onerror=function(v){ws.close();};"        //
                   "ws.onmessage=function(v){"   //
                   "o=JSON.parse(v.data);"       //
-                  "b('power',o.power);" //
+                 "b('power',o.power);" //
+                 "if(titlestatus)document.title='('+(o.power?'On':'Off')+')'+basetitle;"       //
                   "h('offline',!o.online&&o.protocol!='loopback');"     //
                   "h('loopback',o.protocol=='loopback');"       //
                   "h('control',o.control);"     //
@@ -2040,7 +2043,7 @@ web_control (httpd_req_t * req)
                   "if(o.shutdown){reboot=true;s('shutdown','Restarting: '+o.shutdown);h('shutdown',true);};"    //
                   "};};c();"    //
                   "setInterval(function() {if(!ws)c();else ws.send('');},1000);"        //
-                  "</script>", fahrenheit ? "Math.round(10*((v*9/5)+32))/10+'℉'" : "v+'℃'");
+                  "</script>", webtitlestatus, fahrenheit ? "Math.round(10*((v*9/5)+32))/10+'℉'" : "v+'℃'");
    return revk_web_foot (req, 0, websettings, b.protocol_set ? proto_name () : NULL);
 }
 
